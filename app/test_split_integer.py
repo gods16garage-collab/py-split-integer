@@ -5,12 +5,13 @@ def test_sum_of_the_parts_should_be_equal_to_value() -> None:
     for value, parts in [(8, 3), (17, 4), (32, 6), (5, 10)]:
         result = split_integer(value, parts)
         assert sum(result) == value
+        assert len(result) == parts
 
 
 def test_should_split_into_equal_parts_when_value_divisible_by_parts() -> None:
-    result = split_integer(12, 4)
-    assert result == [3, 3, 3, 3]
-    assert all(x == result[0] for x in result)
+    assert split_integer(6, 2) == [3, 3]  # приклад з умови
+    assert split_integer(12, 4) == [3, 3, 3, 3]
+    assert all(x == 3 for x in split_integer(12, 4))
 
 
 def test_should_return_part_equals_to_value_when_split_into_one_part() -> None:
@@ -26,19 +27,13 @@ def test_parts_should_be_sorted_and_difference_not_greater_than_one() -> None:
 
 
 def test_extra_ones_should_go_to_last_parts() -> None:
-    result = split_integer(17, 4)
-    expected = [4, 4, 4, 5]
-    assert result == expected
-
-    result = split_integer(32, 6)
-    expected = [5, 5, 5, 5, 6, 6]
-    assert result == expected
+    assert split_integer(17, 4) == [4, 4, 4, 5]
+    assert split_integer(32, 6) == [5, 5, 5, 5, 6, 6]
 
 
 def test_should_add_zeros_when_value_is_less_than_number_of_parts() -> None:
     result = split_integer(3, 5)
-    expected = [0, 0, 1, 1, 1]
-    assert result == expected
+    assert result == [0, 0, 1, 1, 1]
     assert sum(result) == 3
     assert len(result) == 5
 
